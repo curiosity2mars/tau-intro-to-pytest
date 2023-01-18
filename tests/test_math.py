@@ -1,11 +1,18 @@
-"""
-This module contains basic unit tests for math operations.
-Their purpose is to show how to use the pytest framework by example.
-"""
+import pytest
+from test_data import data
 
-# --------------------------------------------------------------------------------
-# A most basic test function
-# --------------------------------------------------------------------------------
 
 def test_one_plus_one():
-  assert 1 + 1 == 2
+    assert 1 + 1 == 2
+
+
+def test_division_by_zero():
+    with pytest.raises(ZeroDivisionError) as ex:
+        num = 1 / 0
+
+    assert 'division by zero' in str(ex.value)
+
+
+@pytest.mark.parametrize('a, b, result', data.numbers)
+def test_multiply_numbers(a, b, result):
+    assert result == a * b
